@@ -47,8 +47,19 @@
     <div id="todo" class="container">
       <h3>To Do</h3>
       <ul>
+        <li v-for="(item, index) in list" v-bind:key="item.id">
+          {{ item.text }}&nbsp;&nbsp;&nbsp;<button
+            type="button"
+            class="btn btn-danger"
+            v-on:click="btnRemove(item.id)"
+          >
+            x
+          </button>
+        </li>
       </ul>
-      <button type="button" class="btn btn-default">+ Add</button>
+      <button type="button" class="btn btn-default" v-on:click="btnAdd">
+        + Add
+      </button>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script>
@@ -74,9 +85,19 @@
       const todo = new Vue({
         el: "#todo",
         data: {
-
+          list: []
+        },
+        methods: {
+          btnAdd: function() {
+            // console.log("add", this.list.length);
+            this.list.push({ id: this.list.length, text: "test" });
+          },
+          btnRemove: function(index) {
+            // console.log("delete", index);
+            this.list.splice(this.list.findIndex(i => i.id == index), 1);
+          }
         }
-      })
+      });
     </script>
     <style>
       .error-msg {
