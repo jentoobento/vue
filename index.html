@@ -4,21 +4,89 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
     <title>Vue Example</title>
   </head>
-  <body>
-    <div id="example">
-      <p>{{ hello }}</p>
-      
-    </div>
 
-    
+  <body>
+    <div id="example" class="container">
+      <p>{{ hello }}</p>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Type something here"
+        v-model="input"
+      />
+      <button type="button" class="btn btn-primary" v-on:click="btnReverse">
+        Reverse
+      </button>
+      <p v-if="userInputIsTrue">{{ output }}</p>
+      <!-- <p class='error-msg'>errrrrr</p> -->
+    </div>
+    <div id="todo" class="container">
+      <h3>To Do</h3>
+      <ul>
+      </ul>
+      <button type="button" class="btn btn-default">+ Add</button>
+    </div>
     <script src="https://unpkg.com/vue"></script>
     <script>
-      new Vue({
+      const example = new Vue({
         el: "#example",
-        data: { hello: "Hello World!" }
+        data: {
+          hello: "Hello World!",
+          input: "",
+          output: "test",
+          userInputIsTrue: false
+        },
+        methods: {
+          btnReverse: function() {
+            // console.log(this.input);
+            this.userInputIsTrue = true;
+            this.output = this.input
+              .split("")
+              .reverse()
+              .join("");
+          }
+        }
       });
+      const todo = new Vue({
+        el: "#todo",
+        data: {
+
+        }
+      })
     </script>
+    <style>
+      .error-msg {
+        color: red;
+      }
+      .error-input {
+        border-style: solid;
+        border-color: red;
+        border-width: 2px;
+      }
+    </style>
   </body>
 </html>
