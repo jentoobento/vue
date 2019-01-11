@@ -42,13 +42,21 @@
         Reverse
       </button>
       <p v-if="userInputIsTrue">{{ output }}</p>
-      <!-- <p class='error-msg'>errrrrr</p> -->
     </div>
+    <hr />
     <div id="todo" class="container">
       <h3>To Do</h3>
       <ul>
         <li v-for="(item, index) in list" v-bind:key="item.id">
-          {{ item.text }}&nbsp;&nbsp;&nbsp;<button
+          {{ item.text }}&nbsp;&nbsp;&nbsp;
+          <button
+            type="button"
+            class="btn btn-warning"
+            v-on:click="btnEdit(item.id)"
+          >
+            E
+          </button>
+          <button
             type="button"
             class="btn btn-danger"
             v-on:click="btnRemove(item.id)"
@@ -57,16 +65,47 @@
           </button>
         </li>
       </ul>
-      <button type="button" class="btn btn-default" v-on:click="btnAdd">
-        + Add
-      </button>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Add Item"
+          v-model="todoInput"
+          v-on:keyup="todoInputEnter"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" v-on:click="btnAdd">
+            + Add
+          </button>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Edit Item"
+          v-model="todoInputEdit"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-warning" type="button" v-on:click="btnEdit">
+            Edit
+          </button>
+          <button
+            class="btn btn-secondary"
+            type="button"
+            v-on:click="btnCancel"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
     <script src="https://unpkg.com/vue"></script>
     <script>
       const example = new Vue({
         el: "#example",
         data: {
-          hello: "Hello World!",
+          hello: "Hello Vue!!!!!",
           input: "",
           output: "test",
           userInputIsTrue: false
@@ -85,16 +124,28 @@
       const todo = new Vue({
         el: "#todo",
         data: {
-          list: []
+          list: [],
+          todoInput: ""
         },
         methods: {
           btnAdd: function() {
             // console.log("add", this.list.length);
-            this.list.push({ id: this.list.length, text: "test" });
+            // console.log(this.todoInput)
+            this.list.push({ id: this.list.length, text: this.todoInput });
+            this.todoInput = "";
+          },
+          btnEdit: function(index) {
+            console.log(index);
           },
           btnRemove: function(index) {
             // console.log("delete", index);
             this.list.splice(this.list.findIndex(i => i.id == index), 1);
+          },
+          todoInputEnter: function(e) {
+            // console.log(e.key)
+            if (e.key == "Enter") {
+              this.btnAdd();
+            }
           }
         }
       });
