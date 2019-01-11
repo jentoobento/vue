@@ -125,7 +125,8 @@
         el: "#todo",
         data: {
           list: [],
-          todoInput: ""
+          todoInput: "",
+          todoInputEdit: ''
         },
         methods: {
           btnAdd: function() {
@@ -136,6 +137,9 @@
           },
           btnEdit: function(index) {
             console.log(index);
+          },
+          btnCancel: function() {
+            console.log("cancelled");
           },
           btnRemove: function(index) {
             // console.log("delete", index);
